@@ -13,4 +13,7 @@ public interface UserRepository extends CrudRepository<ApplicationUser, Integer>
     Optional<UserDTO> findByEmailAndPassword(String email, String password);
 
     boolean existsByEmail(String email);
+
+    Optional<ApplicationUser> findByEmail(String email);
+
 }

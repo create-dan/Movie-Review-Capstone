@@ -29,15 +29,12 @@ public class ReviewService {
     }
 
     // Get all reviews for a specific movie
-    public List<ReviewDTO> getReviewsByMovie(int movieId) {
-        Movie movie = new Movie(movieId,""," "," "," "," "," "," ",null);
-        movie.setMovieId(movieId);
+    public List<ReviewDTO> getReviewsByMovie(Movie movie) {
         return reviewRepository.findByMovie(movie);
     }
 
     // Get all reviews by a specific user
-    public List<ReviewDTO> getReviewsByUser(int userId) {
-        ApplicationUser user = new ApplicationUser(userId,"","","",null);
+    public List<ReviewDTO> getReviewsByUser(ApplicationUser user) {
         return reviewRepository.findByUser(user);
     }
 

@@ -26,13 +26,13 @@ public class MovieController {
     }
 
     // Save a new movie
-    @PostMapping("movies")
+    @PostMapping("admin/movie")
     public Movie saveMovie(@RequestBody Movie movie) {
         return movieService.saveMovie(movie);
     }
 
     // Delete a movie by ID
-    @DeleteMapping("movies/{movieId}")
+    @DeleteMapping("admin/movie/{movieId}")
     public String deleteMovie(@PathVariable int movieId) {
         return movieService.deleteMovie(movieId);
     }

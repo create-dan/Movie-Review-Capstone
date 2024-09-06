@@ -26,4 +26,6 @@ public class ApplicationUser {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Review> reviews;
 
+    private String role;
+
 }

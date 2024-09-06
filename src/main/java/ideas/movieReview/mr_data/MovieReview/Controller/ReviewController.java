@@ -1,6 +1,8 @@
 package ideas.movieReview.mr_data.MovieReview.Controller;
 
 
+import ideas.movieReview.mr_data.MovieReview.Entity.ApplicationUser;
+import ideas.movieReview.mr_data.MovieReview.Entity.Movie;
 import ideas.movieReview.mr_data.MovieReview.Entity.Review;
 import ideas.movieReview.mr_data.MovieReview.Service.ReviewService;
 import ideas.movieReview.mr_data.MovieReview.dto.ReviewDTOS.ReviewDTO;
@@ -29,15 +31,15 @@ public class ReviewController {
     }
 
 
-    @GetMapping("/movie/{movieId}")
-    public List<ReviewDTO> getReviewsByMovie(@PathVariable int movieId) {
-        return reviewService.getReviewsByMovie(movieId);
+    @GetMapping("/movie")
+    public List<ReviewDTO> getReviewsByMovie(@RequestBody Movie movie) {
+        return reviewService.getReviewsByMovie(movie);
     }
 
     // Get all reviews by a specific user
-    @GetMapping("/user/{userId}")
-    public List<ReviewDTO> getReviewsByUser(@PathVariable int userId) {
-        return reviewService.getReviewsByUser(userId);
+    @GetMapping("/user")
+    public List<ReviewDTO> getReviewsByUser(@RequestBody ApplicationUser user) {
+        return reviewService.getReviewsByUser(user);
     }
 
     @GetMapping("/movie/{movieId}/avg")
@@ -45,7 +47,7 @@ public class ReviewController {
         return reviewService.getAverageRatingByMovie(movieId);
     }
 
-    @GetMapping("/movie/{movieId}/totalreviews")
+    @GetMapping("/movie/totalreviews/{movieId}")
     public int getTotalReviewsByMovie(@PathVariable int movieId) {
         return reviewService.getTotalReviewsByMovie(movieId);
     }
