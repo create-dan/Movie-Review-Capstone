@@ -17,6 +17,12 @@ public interface MovieDTO {
 
     String getPosterUrl();
 
+    String getVideoUrl();
+
+    String getReleaseDate();
+
+    String getMovieLength();
+
 
 
 

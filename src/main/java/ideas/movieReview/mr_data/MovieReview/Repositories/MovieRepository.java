@@ -16,7 +16,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
             "FROM Movie m")
     List<MovieDTO> findBy();
 
-    Optional<Movie> findById(int movieId);
+    Optional<MovieDTO> findByMovieId(int movieId);
 
     List<MovieDTO> findByTitleContainingIgnoreCase(String title);
 

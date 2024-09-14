@@ -4,6 +4,7 @@ import ideas.movieReview.mr_data.MovieReview.Exception.MovieExceptions.MovieNotF
 import ideas.movieReview.mr_data.MovieReview.Exception.ReviewExceptions.ReviewNotFoundException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.EmailAlreadyRegisteredException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.InvalidCredentialException;
+import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.TokenExpiredException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handleGeneralException(Exception ex) {
-//        return new ResponseEntity<>("Something went wrong. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
 
     @ExceptionHandler(InvalidCredentialException.class)
     public ResponseEntity<String> handleInvalidCredentials(InvalidCredentialException invalidCredentialException) {
@@ -41,6 +37,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ReviewNotFoundException.class)
     public ResponseEntity<String> handleReviewNotFound(ReviewNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<String> handleTokenExpired(TokenExpiredException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

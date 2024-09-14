@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @Transactional
+@CrossOrigin("*")
 public class MovieController {
 
     @Autowired
@@ -39,7 +40,7 @@ public class MovieController {
 
     // Get a movie by ID
     @GetMapping("movies/{movieId}")
-    public Movie getMovieById(@PathVariable int movieId) {
+    public MovieDTO getMovieById(@PathVariable int movieId) {
         return movieService.getMovieById(movieId);
     }
 

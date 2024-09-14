@@ -29,8 +29,8 @@ public class ReviewService {
     }
 
     // Get all reviews for a specific movie
-    public List<ReviewDTO> getReviewsByMovie(Movie movie) {
-        return reviewRepository.findByMovie(movie);
+    public List<ReviewDTO> getReviewsByMovie(int movieId) {
+        return reviewRepository.findByMovieId(movieId);
     }
 
     // Get all reviews by a specific user

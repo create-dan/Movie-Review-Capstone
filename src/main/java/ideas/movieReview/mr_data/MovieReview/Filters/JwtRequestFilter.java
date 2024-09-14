@@ -1,7 +1,7 @@
 package ideas.movieReview.mr_data.MovieReview.Filters;
 
-import ideas.movieReview.mr_data.MovieReview.Service.MyUserDetailsService;
-import ideas.movieReview.mr_data.MovieReview.Service.UserService;
+
+import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.TokenExpiredException;
 import ideas.movieReview.mr_data.MovieReview.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,7 +38,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+//            username = jwtUtil.extractUsername(jwt);
+
+            try {
+                username = jwtUtil.extractUsername(jwt);
+            } catch (TokenExpiredException e) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write("Token expired: " + e.getMessage());
+                return; // Stop the filter chain, send response back
+            } catch (RuntimeException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("Invalid token: " + e.getMessage());
+                return; // Stop the filter chain, send response back
+            }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
@@ -20,6 +21,7 @@ public class ReviewController {
 
 
     @PostMapping
+    @RequestMapping("/add")
     public Review saveReview(@RequestBody Review review) {
         return reviewService.saveReview(review);
     }
@@ -32,8 +34,8 @@ public class ReviewController {
 
 
     @GetMapping("/movie")
-    public List<ReviewDTO> getReviewsByMovie(@RequestBody Movie movie) {
-        return reviewService.getReviewsByMovie(movie);
+    public List<ReviewDTO> getReviewsByMovie(@RequestParam int movieId) {
+        return reviewService.getReviewsByMovie(movieId);
     }
 
     // Get all reviews by a specific user

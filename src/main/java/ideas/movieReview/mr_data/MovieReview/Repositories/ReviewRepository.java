@@ -12,7 +12,9 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Integer> {
 
 
-    List<ReviewDTO> findByMovie(Movie movie);
+    @Query("SELECT r FROM Review r WHERE r.movie.movieId = :movieId")
+    List<ReviewDTO> findByMovieId(int movieId);
+
     List<ReviewDTO> findByUser(ApplicationUser user);
 
     @Query("SELECT AVG(r.rating) FROM Review r WHERE r.movie.movieId = :movieId")
@@ -20,7 +22,6 @@ public interface ReviewRepository extends CrudRepository<Review, Integer> {
 
     @Query("SELECT COUNT(r) from Review r where r.movie.movieId= :movieId")
     int countReviewsByMovieId(int movieId);
-
 
 
 }

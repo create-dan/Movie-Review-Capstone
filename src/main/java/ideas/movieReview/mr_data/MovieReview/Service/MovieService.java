@@ -34,8 +34,8 @@ public class MovieService {
         return "Movie Deleted with ID " + movieId;
     }
 
-    public Movie getMovieById(int movieId) {
-        return movieRepository.findById(movieId)
+    public MovieDTO getMovieById(int movieId) {
+        return movieRepository.findByMovieId(movieId)
                 .orElseThrow(() -> new MovieNotFoundException("Movie with ID " + movieId + " not found."));
     }
 
