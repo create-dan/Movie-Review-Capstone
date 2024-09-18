@@ -5,5 +5,6 @@ public interface UserDTO {
     int getUserId();
     String getUsername();
     String getEmail();
+    String getRole();
 }
 

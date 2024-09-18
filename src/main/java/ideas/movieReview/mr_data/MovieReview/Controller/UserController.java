@@ -6,12 +6,14 @@ import ideas.movieReview.mr_data.MovieReview.Repositories.UserRepository;
 import ideas.movieReview.mr_data.MovieReview.Service.UserService;
 
 
+import ideas.movieReview.mr_data.MovieReview.dto.UserDTOS.UserDTO;
 import ideas.movieReview.mr_data.MovieReview.dto.UserDTOS.UserLoginDTO;
 import ideas.movieReview.mr_data.MovieReview.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -63,9 +65,9 @@ public class UserController {
         String jwtToken = jwtUtil.generateToken(userDetails);
 
         Optional<ApplicationUser> userSaved = userRepository.findByEmail(loginRequest.getEmail());
-        record UserResponse (int userId,String email,String password,String role,String token){};
+        record UserResponse (int userId,String username,String email,String password,String role,String token){};
 
-        UserResponse u = new UserResponse(userSaved.get().getUserId(),userSaved.get().getEmail(),userSaved.get().getPassword(),userSaved.get().getRole(),jwtToken);
+        UserResponse u = new UserResponse(userSaved.get().getUserId(),userSaved.get().getUsername(),userSaved.get().getEmail(),userSaved.get().getPassword(),userSaved.get().getRole(),jwtToken);
         return ResponseEntity.ok().body(u);
 
     }
@@ -76,6 +78,16 @@ public class UserController {
         userService.deleteUser(userId);
         return "User deleted with id " + userId;
     }
+
+
+    @PostMapping("/user")
+    public UserDTO getUserById(@RequestBody ApplicationUser user) {
+        Optional<UserDTO> userById = userService.getUserById(user);
+        return userById.orElse(null);
+    }
+
+
+
 
 
 }

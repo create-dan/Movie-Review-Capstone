@@ -4,12 +4,14 @@ import ideas.movieReview.mr_data.MovieReview.Entity.ApplicationUser;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.EmailAlreadyRegisteredException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.UserNotFoundException;
 import ideas.movieReview.mr_data.MovieReview.Repositories.UserRepository;
+import ideas.movieReview.mr_data.MovieReview.dto.UserDTOS.UserDTO;
 import ideas.movieReview.mr_data.MovieReview.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
@@ -39,6 +41,19 @@ public class UserService implements UserDetailsService {
         }
         userRepository.deleteById(userId);
     }
+
+
+    public Optional<UserDTO> getUserById(@RequestBody ApplicationUser user) {
+
+        Optional<ApplicationUser> userSaved = userRepository.findById(user.getUserId());
+        if (userSaved.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + user.getUserId() + " not found.");
+        }
+        return userRepository.findByUserId(user.getUserId());
+    }
+
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
