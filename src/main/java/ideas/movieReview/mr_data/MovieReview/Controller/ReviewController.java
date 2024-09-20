@@ -20,8 +20,7 @@ public class ReviewController {
     private ReviewService reviewService;
 
 
-    @PostMapping
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Review saveReview(@RequestBody Review review) {
         return reviewService.saveReview(review);
     }

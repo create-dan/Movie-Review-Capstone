@@ -15,11 +15,7 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public List<MovieDTO> getMovies(String title) {
-        if (title == null || title.isEmpty()) {
-            return movieRepository.findBy();
-        } else {
-            return movieRepository.findByTitleContainingIgnoreCase(title);
-        }
+            return movieRepository.findAllMovies();
     }
 
     public Movie saveMovie(Movie movie) {
@@ -39,7 +35,5 @@ public class MovieService {
                 .orElseThrow(() -> new MovieNotFoundException("Movie with ID " + movieId + " not found."));
     }
 
-    public List<MovieDTO> searchMovies(String title) {
-        return movieRepository.findByTitleContainingIgnoreCase(title);
-    }
+
 }

@@ -34,27 +34,13 @@ public class MovieServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void testGetMovies_WithTitle() {
 
-        String title = "Inception";
-        MovieDTO movieDTO = mock(MovieDTO.class);
-        when(movieRepository.findByTitleContainingIgnoreCase(title)).thenReturn(Arrays.asList(movieDTO));
-
-
-        List<MovieDTO> result = movieService.getMovies(title);
-
-
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(movieRepository, times(1)).findByTitleContainingIgnoreCase(title);
-    }
 
     @Test
     public void testGetMovies_WithoutTitle() {
 
         MovieDTO movieDTO = mock(MovieDTO.class);
-        when(movieRepository.findBy()).thenReturn(Arrays.asList(movieDTO));
+        when(movieRepository.findAllMovies()).thenReturn(Arrays.asList(movieDTO));
 
 
         List<MovieDTO> result = movieService.getMovies(null);
@@ -62,7 +48,7 @@ public class MovieServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        verify(movieRepository, times(1)).findBy();
+        verify(movieRepository, times(1)).findAllMovies();
     }
 
 
@@ -138,21 +124,7 @@ public class MovieServiceTest {
     }
 
 
-    @Test
-    public void testSearchMovies() {
 
-        String title = "Inception";
-        MovieDTO movieDTO = mock(MovieDTO.class); // Mock the MovieDTO
-        when(movieRepository.findByTitleContainingIgnoreCase(title)).thenReturn(Arrays.asList(movieDTO));
-
-
-        List<MovieDTO> result = movieService.searchMovies(title);
-
-
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(movieRepository, times(1)).findByTitleContainingIgnoreCase(title);
-    }
 
 
 }

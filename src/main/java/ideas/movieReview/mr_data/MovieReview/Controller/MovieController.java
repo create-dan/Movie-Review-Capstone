@@ -44,11 +44,7 @@ public class MovieController {
         return movieService.getMovieById(movieId);
     }
 
-    // Search movies by title
-    @GetMapping("movies/search")
-    public List<MovieDTO> searchMovies(@RequestParam String title) {
-        return movieService.searchMovies(title);
-    }
+
 
 
 }

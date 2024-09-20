@@ -30,7 +30,7 @@ public class Movie {
     private String releaseDate;
     private String movieLength;
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<Review> reviews;
 
 

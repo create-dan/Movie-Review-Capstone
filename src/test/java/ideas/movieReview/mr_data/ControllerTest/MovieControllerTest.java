@@ -83,24 +83,7 @@ public class MovieControllerTest {
         verify(movieService,times(1)).getMovieById(movieId);
     }
 
-    // Search movies by title
-    @Test
-    public void testSearchMovies() {
-        String title = "Test Movie";
-        List<MovieDTO> mockMovies = new ArrayList<>();
 
-        MovieDTO movie = mock(MovieDTO.class);
-        when(movie.getTitle()).thenReturn(title);
-        mockMovies.add(movie);
-
-        when(movieService.searchMovies(title)).thenReturn(mockMovies);
-
-        List<MovieDTO> result = movieController.searchMovies(title);
-
-        assertEquals(1, result.size());
-        assertEquals("Test Movie", result.get(0).getTitle());
-        verify(movieService, times(1)).searchMovies(title);
-    }
 
 
 
