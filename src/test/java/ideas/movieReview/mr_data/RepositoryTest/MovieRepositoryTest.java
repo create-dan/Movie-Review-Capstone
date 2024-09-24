@@ -33,7 +33,6 @@ public class MovieRepositoryTest {
         movie.setWriter("test");
         movie.setPosterUrl("test");
 
-        // Save the movie
         movie = movieRepository.save(movie);
     }
 
@@ -56,15 +55,13 @@ public class MovieRepositoryTest {
     @Rollback
     public void testDeleteByMovieId() {
 
-        // Ensure the movie was added
+
         Optional<MovieDTO> movieAdded = this.movieRepository.findByMovieId(movie.getMovieId());
         assertTrue(movieAdded.isPresent());
 
-        // Delete the movie
         int deletedCount = this.movieRepository.deleteByMovieId(movieAdded.get().getMovieId());
         assertEquals(1, deletedCount);
 
-        // Verify that the movie is no longer present
         Optional<MovieDTO> movieAfterDelete = this.movieRepository.findByMovieId(movieAdded.get().getMovieId());
         assertFalse(movieAfterDelete.isPresent());
     }

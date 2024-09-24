@@ -11,5 +11,4 @@ public class MrDataApplication {
         SpringApplication.run(MrDataApplication.class, args);
     }
 
-
 }

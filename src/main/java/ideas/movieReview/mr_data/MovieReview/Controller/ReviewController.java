@@ -52,4 +52,10 @@ public class ReviewController {
     public int getTotalReviewsByMovie(@PathVariable int movieId) {
         return reviewService.getTotalReviewsByMovie(movieId);
     }
+
+    @GetMapping("/count")
+    public int getTotalUsers() {
+        return reviewService.getTotalUsers();
+    }
+
 }

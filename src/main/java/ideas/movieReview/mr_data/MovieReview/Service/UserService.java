@@ -64,4 +64,9 @@ public class UserService implements UserDetailsService {
                 .roles(user.getRole())
                 .build();
     }
+
+    public int getTotalUsers() {
+
+        return (int) userRepository.count();
+    }
 }

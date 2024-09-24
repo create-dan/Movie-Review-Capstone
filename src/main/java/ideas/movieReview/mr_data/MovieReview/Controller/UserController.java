@@ -87,6 +87,12 @@ public class UserController {
     }
 
 
+    @GetMapping("/user/count")
+    public int getTotalUsers() {
+        return userService.getTotalUsers();
+    }
+
+
 
 
 

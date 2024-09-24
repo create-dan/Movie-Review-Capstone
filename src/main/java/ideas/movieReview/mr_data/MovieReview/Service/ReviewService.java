@@ -47,4 +47,8 @@ public class ReviewService {
     public int getTotalReviewsByMovie(int movieId) {
         return reviewRepository.countReviewsByMovieId(movieId);
     }
+
+    public int getTotalUsers() {
+        return (int) reviewRepository.count();
+    }
 }
