@@ -58,9 +58,7 @@ public class MovieServiceTest {
         Movie movie = mock(Movie.class);
         when(movieRepository.save(movie)).thenReturn(movie);
 
-
         Movie result = movieService.saveMovie(movie);
-
 
         assertNotNull(result);
         verify(movieRepository, times(1)).save(movie);

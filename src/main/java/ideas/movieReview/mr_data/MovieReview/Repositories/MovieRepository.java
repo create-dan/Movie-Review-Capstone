@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
-    @Query(value = "SELECT m.movieId AS movieId, m.title AS title, m.description AS description, " + "m.genre AS genre, m.director AS director, m.movieCast AS movieCast, " + "m.writer AS writer, m.posterUrl AS posterUrl " + "FROM Movie m")
+    @Query(value = "SELECT m.movieId AS movieId, m.title AS title, m.description AS description, " + "m.genre AS genre, m.director AS director, m.movieCast AS movieCast, " + "m.writer AS writer, m.posterUrl AS posterUrl , m.movieLength as movieLength , m.releaseDate as releaseDate, m.videoUrl as videoUrl " + "FROM Movie m")
     List<MovieDTO> findAllMovies();
 
     Optional<MovieDTO> findByMovieId(int movieId);
