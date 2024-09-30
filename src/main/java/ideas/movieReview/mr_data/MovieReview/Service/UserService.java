@@ -43,16 +43,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public Optional<UserDTO> getUserById(@RequestBody ApplicationUser user) {
-
-        Optional<ApplicationUser> userSaved = userRepository.findById(user.getUserId());
-        if (userSaved.isEmpty()) {
-            throw new UserNotFoundException("User with ID " + user.getUserId() + " not found.");
-        }
-        return userRepository.findByUserId(user.getUserId());
-    }
-
-
 
 
     @Override
@@ -63,6 +53,17 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(user.getRole())
                 .build();
+    }
+
+
+
+    public Optional<UserDTO> getUserById(@RequestBody ApplicationUser user) {
+
+        Optional<ApplicationUser> userSaved = userRepository.findById(user.getUserId());
+        if (userSaved.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + user.getUserId() + " not found.");
+        }
+        return userRepository.findByUserId(user.getUserId());
     }
 
     public int getTotalUsers() {

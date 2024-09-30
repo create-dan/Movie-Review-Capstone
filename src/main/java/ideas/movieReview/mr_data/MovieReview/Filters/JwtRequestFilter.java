@@ -38,18 +38,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-//            username = jwtUtil.extractUsername(jwt);
 
             try {
                 username = jwtUtil.extractUsername(jwt);
             } catch (TokenExpiredException e) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write("Token expired: " + e.getMessage());
-                return; // Stop the filter chain, send response back
+                return;
             } catch (RuntimeException e) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().write("Invalid token: " + e.getMessage());
-                return; // Stop the filter chain, send response back
+                return;
             }
         }
 

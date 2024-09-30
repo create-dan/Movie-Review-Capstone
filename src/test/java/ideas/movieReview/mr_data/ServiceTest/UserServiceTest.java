@@ -5,6 +5,7 @@ import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.EmailAlrea
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.UserNotFoundException;
 import ideas.movieReview.mr_data.MovieReview.Repositories.UserRepository;
 import ideas.movieReview.mr_data.MovieReview.Service.UserService;
+import ideas.movieReview.mr_data.MovieReview.dto.UserDTOS.UserDTO;
 import ideas.movieReview.mr_data.MovieReview.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,5 +108,49 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findByEmail("unknown@example.com");
     }
 
+
+    @Test
+    void testGetUserById_UserFound() {
+
+        ApplicationUser user = new ApplicationUser();
+        user.setUserId(1);
+
+        UserDTO userDTO = mock(UserDTO.class);
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(userRepository.findByUserId(1)).thenReturn(Optional.of(userDTO));
+
+        Optional<UserDTO> result = userService.getUserById(user);
+
+        assertTrue(result.isPresent());
+        assertEquals(userDTO, result.get());
+        verify(userRepository, times(1)).findById(1);
+        verify(userRepository, times(1)).findByUserId(1);
+    }
+
+    @Test
+    void testGetUserById_UserNotFound() {
+
+        ApplicationUser user = new ApplicationUser();
+        user.setUserId(1);
+
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> userService.getUserById(user));
+
+        verify(userRepository, times(1)).findById(1);
+        verify(userRepository, times(0)).findByUserId(1);
+    }
+
+    @Test
+    void testGetTotalUsers() {
+
+        when(userRepository.count()).thenReturn(10L);
+
+        int totalUsers = userService.getTotalUsers();
+
+        assertEquals(10, totalUsers);
+        verify(userRepository, times(1)).count();
+    }
 
 }

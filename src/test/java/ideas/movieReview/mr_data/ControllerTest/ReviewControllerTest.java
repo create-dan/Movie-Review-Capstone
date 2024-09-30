@@ -128,5 +128,15 @@ public class ReviewControllerTest {
         verify(reviewService, times(1)).getTotalReviewsByMovie(movieId);
     }
 
+    @Test
+    public void testGetTotalUsers(){
+        int totalUsers = 10;
+
+        when(reviewService.getTotalUsers()).thenReturn(totalUsers);
+
+        int result = reviewController.getTotalUsers();
+        assertEquals(10,result);
+        verify(reviewService,times(1)).getTotalUsers();
+    }
 
 }

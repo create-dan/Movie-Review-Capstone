@@ -142,4 +142,15 @@ public class ReviewServiceTest {
         assertEquals(totalReviews, result);
         verify(reviewRepository, times(1)).countReviewsByMovieId(movieId);
     }
+
+    @Test
+    public void testGetTotalUsers(){
+        int totalUsers = 10;
+        when(reviewRepository.count()).thenReturn((long) totalUsers);
+
+        int result = reviewService.getTotalUsers();
+
+        assertEquals(10,result);
+        verify(reviewRepository,times(1)).count();
+    }
 }

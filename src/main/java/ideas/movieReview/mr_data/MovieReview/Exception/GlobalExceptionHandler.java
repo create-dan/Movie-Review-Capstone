@@ -3,7 +3,6 @@ package ideas.movieReview.mr_data.MovieReview.Exception;
 import ideas.movieReview.mr_data.MovieReview.Exception.MovieExceptions.MovieNotFoundException;
 import ideas.movieReview.mr_data.MovieReview.Exception.ReviewExceptions.ReviewNotFoundException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.EmailAlreadyRegisteredException;
-import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.InvalidCredentialException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.TokenExpiredException;
 import ideas.movieReview.mr_data.MovieReview.Exception.UserExceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -29,11 +28,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-
-    @ExceptionHandler(InvalidCredentialException.class)
-    public ResponseEntity<String> handleInvalidCredentials(InvalidCredentialException invalidCredentialException) {
-        return new ResponseEntity<>("Invalid Credentials", HttpStatus.UNAUTHORIZED);
-    }
 
     @ExceptionHandler(ReviewNotFoundException.class)
     public ResponseEntity<String> handleReviewNotFound(ReviewNotFoundException exception) {

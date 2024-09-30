@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MrDataApplication {
 
     public static void main(String[] args) {
-        String.class.getClassLoader();
+
         SpringApplication.run(MrDataApplication.class, args);
     }
 
