@@ -17,8 +17,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+
 
 public class ReviewControllerTest {
+
     @Mock
     ReviewService reviewService;
 
@@ -30,7 +35,7 @@ public class ReviewControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    //Save Review
+    // Save Review
     @Test
     public void testSaveReview() {
         Review review = new Review();
@@ -40,12 +45,12 @@ public class ReviewControllerTest {
 
         when(reviewService.saveReview(review)).thenReturn(review);
 
-        Review result = reviewController.saveReview(review);
+        ResponseEntity<Review> response = reviewController.saveReview(review);
 
-        assertEquals(1, result.getReviewId());
-        assertEquals("Nice", result.getDescription());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(1, response.getBody().getReviewId());
+        assertEquals("Nice", response.getBody().getDescription());
         verify(reviewService, times(1)).saveReview(review);
-
     }
 
     // Test deleteReview
@@ -55,30 +60,31 @@ public class ReviewControllerTest {
 
         when(reviewService.deleteReview(reviewId)).thenReturn("Review deleted successfully");
 
-        String result = reviewController.deleteReview(reviewId);
+        ResponseEntity<String> response = reviewController.deleteReview(reviewId);
 
-        assertEquals("Review deleted successfully", result);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Review deleted successfully", response.getBody());
         verify(reviewService, times(1)).deleteReview(reviewId);
     }
 
     // Test getReviewsByMovie
     @Test
     public void testGetReviewsByMovie() {
-        Movie movie = new Movie();
-        movie.setMovieId(1);
+        int movieId = 1;
 
         List<ReviewDTO> mockReviews = new ArrayList<>();
         ReviewDTO reviewDTO = mock(ReviewDTO.class);
         when(reviewDTO.getDescription()).thenReturn("Amazing movie!");
         mockReviews.add(reviewDTO);
 
-        when(reviewService.getReviewsByMovie(movie.getMovieId())).thenReturn(mockReviews);
+        when(reviewService.getReviewsByMovie(movieId)).thenReturn(mockReviews);
 
-        List<ReviewDTO> result = reviewController.getReviewsByMovie(movie.getMovieId());
+        ResponseEntity<List<ReviewDTO>> response = reviewController.getReviewsByMovie(movieId);
 
-        assertEquals(1, result.size());
-        assertEquals("Amazing movie!", result.get(0).getDescription());
-        verify(reviewService, times(1)).getReviewsByMovie(movie.getMovieId());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Amazing movie!", response.getBody().get(0).getDescription());
+        verify(reviewService, times(1)).getReviewsByMovie(movieId);
     }
 
     // Test getReviewsByUser
@@ -94,10 +100,11 @@ public class ReviewControllerTest {
 
         when(reviewService.getReviewsByUser(user)).thenReturn(mockReviews);
 
-        List<ReviewDTO> result = reviewController.getReviewsByUser(user);
+        ResponseEntity<List<ReviewDTO>> response = reviewController.getReviewsByUser(user);
 
-        assertEquals(1, result.size());
-        assertEquals("Excellent review", result.get(0).getDescription());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Excellent review", response.getBody().get(0).getDescription());
         verify(reviewService, times(1)).getReviewsByUser(user);
     }
 
@@ -108,12 +115,12 @@ public class ReviewControllerTest {
 
         when(reviewService.getAverageRatingByMovie(movieId)).thenReturn(4.5);
 
-        Double result = reviewController.getAverageRatingByMovie(movieId);
+        ResponseEntity<Double> response = reviewController.getAverageRatingByMovie(movieId);
 
-        assertEquals(4.5, result);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(4.5, response.getBody());
         verify(reviewService, times(1)).getAverageRatingByMovie(movieId);
     }
-
 
     // Test getTotalReviewsByMovie
     @Test
@@ -122,21 +129,25 @@ public class ReviewControllerTest {
 
         when(reviewService.getTotalReviewsByMovie(movieId)).thenReturn(10);
 
-        int result = reviewController.getTotalReviewsByMovie(movieId);
+        ResponseEntity<Integer> response = reviewController.getTotalReviewsByMovie(movieId);
 
-        assertEquals(10, result);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(10, response.getBody());
         verify(reviewService, times(1)).getTotalReviewsByMovie(movieId);
     }
 
+    // Test getTotalUsers
     @Test
-    public void testGetTotalUsers(){
+    public void testGetTotalUsers() {
         int totalUsers = 10;
 
         when(reviewService.getTotalUsers()).thenReturn(totalUsers);
 
-        int result = reviewController.getTotalUsers();
-        assertEquals(10,result);
-        verify(reviewService,times(1)).getTotalUsers();
-    }
+        ResponseEntity<Integer> response = reviewController.getTotalUsers();
 
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(10, response.getBody());
+        verify(reviewService, times(1)).getTotalUsers();
+    }
 }
+

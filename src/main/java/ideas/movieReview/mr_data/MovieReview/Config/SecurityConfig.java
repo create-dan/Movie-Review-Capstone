@@ -28,11 +28,13 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/h2-console/**")
                         .disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+//                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/admin/movie").authenticated()
                         .requestMatchers("/reviews/add").authenticated()
+                                .requestMatchers("/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
                         .frameOptions().sameOrigin()

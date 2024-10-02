@@ -93,7 +93,7 @@ public class JwtUtilTest {
 
     @Test
     void shouldTestValidateToken_InvalidUsername() {
-        // Case 3: Token with a non-matching username
+
         when(userDetails.getUsername()).thenReturn("differentUser");
 
         Boolean isValid = jwtUtil.validateToken(token, userDetails);
@@ -102,7 +102,7 @@ public class JwtUtilTest {
 
     @Test
     void shouldTestValidateToken_InvalidToken() {
-        // Case 4: Invalid or malformed token
+
         String invalidToken = "invalid.token.value";
 
         assertThrows(MalformedJwtException.class, () -> jwtUtil.validateToken(invalidToken, userDetails));

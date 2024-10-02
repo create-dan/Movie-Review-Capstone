@@ -7,9 +7,12 @@ import ideas.movieReview.mr_data.MovieReview.dto.MovieDTOS.MovieDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 
 @RestController
@@ -20,31 +23,30 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    // Get all movies with optional title search
+
     @GetMapping("movies")
-    public List<MovieDTO> getMovies(@RequestParam(required = false) String title) {
-        return movieService.getMovies(title);
+    public ResponseEntity<List<MovieDTO>> getMovies(@RequestParam(required = false) String title) {
+        List<MovieDTO> movies = movieService.getMovies(title);
+        return ResponseEntity.ok(movies);  // Return 200 OK with the list of movies
     }
 
-    // Save a new movie
     @PostMapping("admin/movie")
-    public Movie saveMovie(@RequestBody Movie movie) {
-        return movieService.saveMovie(movie);
+    public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
+        Movie savedMovie = movieService.saveMovie(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);  // Return 201 Created with the saved movie
     }
 
-    // Delete a movie by ID
+
     @DeleteMapping("admin/movie/{movieId}")
-    public String deleteMovie(@PathVariable int movieId) {
-        return movieService.deleteMovie(movieId);
+    public ResponseEntity<String> deleteMovie(@PathVariable int movieId) {
+        movieService.deleteMovie(movieId);
+        return ResponseEntity.ok("Movie Deleted with ID " + movieId);  // Return 200 OK if successfully deleted
     }
 
-    // Get a movie by ID
     @GetMapping("movies/{movieId}")
-    public MovieDTO getMovieById(@PathVariable int movieId) {
-        return movieService.getMovieById(movieId);
+    public ResponseEntity<MovieDTO> getMovieById(@PathVariable int movieId) {
+        MovieDTO movie = movieService.getMovieById(movieId);
+        return ResponseEntity.ok(movie);  // Return 200 OK with the movie
     }
-
-
-
 
 }

@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,9 +18,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+
 
     @Autowired
     private UserDetailsService userService;
@@ -35,6 +39,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
+
+
+        HttpServletResponse res = response;
+        HttpServletRequest req = request;
+        Map<String, String> map = new HashMap<>();
+        String originHeader = request.getHeader("origin");
+        res.setHeader("Access-Control-Allow-Origin", originHeader);
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        res.setHeader("Access-Control-Max-Age", "3600");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
@@ -67,6 +81,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("JWT Token is invalid");
             }
         }
-        chain.doFilter(request, response);
+//        chain.doFilter(request, response);
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            res.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, res);
+        }
     }
+
+
 }
