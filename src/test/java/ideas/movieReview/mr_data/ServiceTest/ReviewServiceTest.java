@@ -144,11 +144,11 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testGetTotalUsers(){
+    public void testGetTotalReviews(){
         int totalUsers = 10;
         when(reviewRepository.count()).thenReturn((long) totalUsers);
 
-        int result = reviewService.getTotalUsers();
+        int result = reviewService.getTotalReviews();
 
         assertEquals(10,result);
         verify(reviewRepository,times(1)).count();

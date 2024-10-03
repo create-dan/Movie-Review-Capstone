@@ -65,9 +65,9 @@ public class ReviewController {
 
 
     @GetMapping("/count")
-    public ResponseEntity<Integer> getTotalUsers() {
-        int totalUsers = reviewService.getTotalUsers();
-        return new ResponseEntity<>(totalUsers, HttpStatus.OK);
+    public ResponseEntity<Integer> getTotalReviews() {
+        int totalReviews = reviewService.getTotalReviews();
+        return new ResponseEntity<>(totalReviews, HttpStatus.OK);
     }
 
 }

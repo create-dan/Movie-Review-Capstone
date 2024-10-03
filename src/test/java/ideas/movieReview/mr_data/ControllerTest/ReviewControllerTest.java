@@ -141,13 +141,13 @@ public class ReviewControllerTest {
     public void testGetTotalUsers() {
         int totalUsers = 10;
 
-        when(reviewService.getTotalUsers()).thenReturn(totalUsers);
+        when(reviewService.getTotalReviews()).thenReturn(totalUsers);
 
-        ResponseEntity<Integer> response = reviewController.getTotalUsers();
+        ResponseEntity<Integer> response = reviewController.getTotalReviews();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(10, response.getBody());
-        verify(reviewService, times(1)).getTotalUsers();
+        verify(reviewService, times(1)).getTotalReviews();
     }
 }
 

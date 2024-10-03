@@ -27,26 +27,26 @@ public class MovieController {
     @GetMapping("movies")
     public ResponseEntity<List<MovieDTO>> getMovies(@RequestParam(required = false) String title) {
         List<MovieDTO> movies = movieService.getMovies(title);
-        return ResponseEntity.ok(movies);  // Return 200 OK with the list of movies
+        return ResponseEntity.ok(movies);
     }
 
     @PostMapping("admin/movie")
     public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieService.saveMovie(movie);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);  // Return 201 Created with the saved movie
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
 
     @DeleteMapping("admin/movie/{movieId}")
     public ResponseEntity<String> deleteMovie(@PathVariable int movieId) {
         movieService.deleteMovie(movieId);
-        return ResponseEntity.ok("Movie Deleted with ID " + movieId);  // Return 200 OK if successfully deleted
+        return ResponseEntity.ok("Movie Deleted with ID " + movieId);
     }
 
     @GetMapping("movies/{movieId}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable int movieId) {
         MovieDTO movie = movieService.getMovieById(movieId);
-        return ResponseEntity.ok(movie);  // Return 200 OK with the movie
+        return ResponseEntity.ok(movie);
     }
 
 }
